@@ -1,0 +1,43 @@
+(console.log "welcome to sibilant")
+
+(def sort-list [list]
+    
+    (var masterList [] )
+    (var masterListArray [] )
+    ;; generate object with key value pair and set the value to zero
+    (each (key String) list
+        (set masterList key  0 )
+    )
+    ;; increment count of key value pair when a key is found
+    (each (key String) list
+        (set masterList key  (+ (get masterList key) 1) )
+    )
+    
+    ;; push onto an array with the key value pair denoted from our master object
+    (each-key key masterList (
+        .push masterListArray {key:key,value:(get masterList key)}
+    ))
+
+    ;; sort array by the largest value to the smallest
+    (.sort masterListArray (#(a,b) (
+        - b.value a.value   
+    )))
+    ;; print sorted list
+    (console.log masterListArray )
+
+)
+
+(var inputs1 ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c"])
+;;( sort-list inputs1)
+
+(def gen-input [length]
+  (var samples ["abc" "def" "ghi" "jkl" "mno" "pqr"])
+  (.from Array {length: length}
+               (#> (get samples (.floor Math (* (.random Math)
+	                                        (get samples 'length)))))))
+	       
+(var inputs2 (gen-input 100))
+(var inputs3 (gen-input 1000))
+( sort-list inputs2)
+ 
+
