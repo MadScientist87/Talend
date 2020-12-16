@@ -4,12 +4,11 @@
     
     (var masterList [] )
     (var masterListArray [] )
-    ;; generate object with key value pair and set the value to zero
-    (each (key String) list
-        (set masterList key  0 )
-    )
+    
     ;; increment count of key value pair when a key is found
     (each (key String) list
+       (if (= undefined (get masterList key) ) (set masterList key  0 ))
+
         (set masterList key  (+ (get masterList key) 1) )
     )
     
