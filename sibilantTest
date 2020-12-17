@@ -1,33 +1,37 @@
-(console.log "welcome to sibilant")
-
 (def sort-list [list]
+    ;; sort and print if list is not undefined and not empty
+    (if (and (!= undefined list) (not (empty? list)))
+        (do
+            (var masterList [] )
+            (var masterListArray [] )
+  
+            ;; increment count of key value pair when a key is found
+            (each (key String) list
+            (if (= undefined (get masterList key) ) (set masterList key  0 ))
+                (set masterList key  (+ (get masterList key) 1) )
+            )
     
-    (var masterList [] )
-    (var masterListArray [] )
-    
-    ;; increment count of key value pair when a key is found
-    (each (key String) list
-       (if (= undefined (get masterList key) ) (set masterList key  0 ))
+            ;; push onto an array with the key value pair denoted from our master object
+            (each-key key masterList (
+                .push masterListArray {key:key,value:(get masterList key)}
+            ))
 
-        (set masterList key  (+ (get masterList key) 1) )
-    )
-    
-    ;; push onto an array with the key value pair denoted from our master object
-    (each-key key masterList (
-        .push masterListArray {key:key,value:(get masterList key)}
+            ;; sort array by the largest value to the smallest
+            (.sort masterListArray (#(a,b) (
+                - b.value a.value   
+            )))
+            ;; print sorted list
+            (console.log masterListArray )
+      
     ))
-
-    ;; sort array by the largest value to the smallest
-    (.sort masterListArray (#(a,b) (
-        - b.value a.value   
-    )))
-    ;; print sorted list
-    (console.log masterListArray )
-
+    ;; print empty array if list is undefined or empty
+    (if (or (= undefined list)  (empty? list))
+        (do
+            (console.log [])
+    ))
 )
 
 (var inputs1 ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c"])
-;;( sort-list inputs1)
 
 (def gen-input [length]
   (var samples ["abc" "def" "ghi" "jkl" "mno" "pqr"])
@@ -37,6 +41,14 @@
 	       
 (var inputs2 (gen-input 100))
 (var inputs3 (gen-input 1000))
-( sort-list inputs2)
+(sort-list inputs1)
+(sort-list inputs2)
+(sort-list inputs3)
+
+;; null test
+(sort-list )
+
+;; empty test
+(sort-list [])
  
 
